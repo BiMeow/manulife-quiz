@@ -78,7 +78,7 @@ function PopupQuiz() {
 
   return (
     <>
-      <ConfettiParticles active={showConfetti} particleCount={60} />
+      <ConfettiParticles active={showConfetti} particleCount={20} />
       <Modal className="quiz-modal custom-modal" open={isPopupQuizOpen} closeIcon={null} footer={null} centered>
         <div className="quiz-modal-content">
           {stage && activeQuestion < stage.questions.length ? (
