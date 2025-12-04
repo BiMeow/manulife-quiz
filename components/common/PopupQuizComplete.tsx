@@ -52,7 +52,7 @@ function PopupQuizComplete() {
 
   return (
     <>
-      <ConfettiParticles active={showConfetti} particleCount={80} />
+      <ConfettiParticles active={showConfetti} particleCount={20} />
       <Modal
         className="quiz-complete-modal custom-modal"
         open={isPopupQuizCompleteOpen}
