@@ -8,10 +8,12 @@ import { useWindowSize } from "usehooks-ts";
 function PageHome({ ...props }) {
   const { width } = useWindowSize();
 
-  const [isDesktop, setIsDesktop] = useState(true);
+  const [isInit, setIsInit] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
+      setIsInit(true);
       setIsDesktop(width > 1000);
     }, 100);
     return () => {};
@@ -20,7 +22,7 @@ function PageHome({ ...props }) {
   return (
     <>
       <div id="PageHome" className={`fadeIn`}>
-        {isDesktop ? <Desktop /> : <Mobile />}
+        {isInit ? isDesktop ? <Desktop /> : <Mobile /> : null}
       </div>
     </>
   );

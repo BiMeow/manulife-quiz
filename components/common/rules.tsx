@@ -3,15 +3,12 @@ import { useStorage } from "@/contexts/StorageContext";
 import { memo } from "react";
 
 function Rules({ ...props }) {
-  const { setIsModalRulesOpen } = useStorage();
+  const { setIsPopupRulesOpen } = useStorage();
 
   return (
     <>
       <div id="Rules" className={``}>
-        <p
-          className="text-xs font-medium underline w-fit mx-auto"
-          onClick={() => setIsModalRulesOpen(true)}
-        >
+        <p className="mx-auto w-fit text-xs font-medium underline" onClick={() => setIsPopupRulesOpen(true)}>
           Thể lệ chương trình
         </p>
       </div>

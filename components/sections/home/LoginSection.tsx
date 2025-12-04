@@ -5,6 +5,7 @@ import Image from "next/image";
 import { memo, useState } from "react";
 import { useWindowSize } from "usehooks-ts";
 import { message } from "antd";
+import { motion } from "framer-motion";
 
 function LoginSection({ ...props }) {
   const { height } = useWindowSize();
@@ -20,7 +21,13 @@ function LoginSection({ ...props }) {
 
   return (
     <>
-      <div id="LoginSection" className={cn("flex flex-1 flex-col", height > 620 ? "h-dvh overflow-hidden" : "")}>
+      <motion.div
+        initial={{ scale: 1, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0, opacity: 0 }}
+        id="LoginSection"
+        className={cn("flex flex-1 flex-col", height > 620 ? "h-dvh overflow-hidden" : "")}
+      >
         <Image
           id="introBanner"
           src="/images/home/login-banner.png"
@@ -35,7 +42,7 @@ function LoginSection({ ...props }) {
             Cho Manulife biết tuổi thật của bạn để mình <br /> so sánh với tuổi bao tử nhé!
           </h2>
           <input
-            type="text"
+            type="tel"
             placeholder="Nhập tuổi thật của bạn"
             className="cusInput"
             onChange={(e) => setYob(e.target.value)}
@@ -47,12 +54,12 @@ function LoginSection({ ...props }) {
               }
             }}
           />
-          <button className="main-btn flex w-full" onClick={() => handleNext()}>
+          <button className="main-btn flexCenter w-full gap-3" onClick={() => handleNext()}>
             <span>Tiếp theo</span>
             <IconArrow />
           </button>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }

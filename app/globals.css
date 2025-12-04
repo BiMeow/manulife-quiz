@@ -92,15 +92,23 @@ body {
   @apply mx-auto w-full px-[20px];
 }
 
+.flexCenter {
+  @apply flex items-center justify-center;
+}
+
 .main-button {
   @apply rounded-md bg-blue-500 px-4 py-2 text-white;
 }
 
 .main-btn {
-  @apply inline-block cursor-pointer rounded-full border-2 border-white p-2.5 text-center text-lg font-bold text-[#15803d] transition-all duration-300 ease-in-out;
+  @apply cursor-pointer rounded-full border-2 border-white p-2.5 text-center text-lg font-bold text-[#111] transition-all duration-300 ease-in-out;
   background: linear-gradient(to bottom, #dcfce7 0%, #fff 50%, #dcfce7 100%);
   background-size: 200% 200% !important;
   background-position: bottom;
+
+  &:disabled {
+    background: #ccc !important;
+  }
 
   &:hover {
     background-position: top;
@@ -108,10 +116,14 @@ body {
 }
 
 .secondary-btn {
-  @apply inline-block cursor-pointer rounded-full border-2 border-white p-[10px] text-center text-lg font-bold text-white transition-all duration-300 ease-in-out;
+  @apply cursor-pointer rounded-full border-2 border-white p-[10px] text-center text-lg font-bold text-white transition-all duration-300 ease-in-out;
   background: linear-gradient(to bottom, #00753e 0%, #00a758 50%, #00753e 100%);
   background-size: 200% 200% !important;
   background-position: bottom;
+
+  &:disabled {
+    background: #aaa !important;
+  }
 
   &:hover {
     background-position: top;
@@ -119,23 +131,32 @@ body {
 }
 
 .cusInput {
-  @apply w-full rounded-full border border-[#fff9] px-6 py-3 text-base leading-relaxed duration-300 focus:outline-white;
+  @apply w-full rounded-full border border-[#fff9] px-6 py-3 text-base leading-relaxed duration-300 focus:shadow-[0px_0px_0px_2px_#fffa] focus:outline-none;
 }
 
 .custom-modal {
   @apply max-w-[calc(100dvw-32px)]!;
 
   .ant-modal-container {
-    @apply rounded-[28px] px-[28px] py-[24px];
+    @apply rounded-[28px] px-7 py-6;
   }
 
   .ant-modal-body {
     @apply font-Manulife text-base;
   }
+
+  &.quiz-modal {
+    .ant-modal-container {
+      @apply px-3;
+    }
+  }
 }
 
 .animation-scale {
   animation: scale 3s ease-in-out infinite;
+}
+.animation-swing {
+  animation: swing 3s ease-in-out infinite;
 }
 
 @keyframes scale {
@@ -147,5 +168,17 @@ body {
   }
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(-10deg);
   }
 }
