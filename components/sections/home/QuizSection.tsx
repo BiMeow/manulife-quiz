@@ -1,10 +1,15 @@
 import PopupQuiz from "@/components/common/PopupQuiz";
+import PopupQuizComplete from "@/components/common/PopupQuizComplete";
+import Rules from "@/components/common/rules";
 import { useStorage } from "@/contexts/StorageContext";
+import { listStages } from "@/data/quiz";
 import { cn } from "@/utils/main";
 import { message } from "antd";
+import { gsap } from "gsap";
 import Image from "next/image";
-import { memo } from "react";
+import { memo, useEffect, useRef } from "react";
 import { useWindowSize } from "usehooks-ts";
+import { motion } from "framer-motion";
 
 const decoImages = [
   {
@@ -17,84 +22,72 @@ const decoImages = [
   },
   {
     image: "/images/home/quiz-deco-3.png",
-    className: "bottom-0 right-[10%] w-[35%]",
-  },
-];
-
-const listStages = [
-  {
-    className: "absolute bottom-[10%] left-[16%] z-3 w-[40%]",
-    questions: [
-      {
-        question: "Câu hỏi 1",
-        answers: [
-          { answer: "Câu trả lời 1", value: 1 },
-          { answer: "Câu trả lời 2", value: 2 },
-          { answer: "Câu trả lời 3", value: 3 },
-        ],
-      },
-      {
-        question: "Câu hỏi 2",
-        answers: [
-          { answer: "Câu trả lời 1", value: 1 },
-          { answer: "Câu trả lời 2", value: 2 },
-          { answer: "Câu trả lời 3", value: 3 },
-        ],
-      },
-    ],
-  },
-  {
-    className: "absolute bottom-[32%] left-[44%] z-3 w-[40%]",
-    questions: [
-      {
-        question: "Câu hỏi 1",
-        answers: [
-          { answer: "Câu trả lời 1", value: 1 },
-          { answer: "Câu trả lời 2", value: 2 },
-          { answer: "Câu trả lời 3", value: 3 },
-        ],
-      },
-      {
-        question: "Câu hỏi 2",
-        answers: [
-          { answer: "Câu trả lời 1", value: 1 },
-          { answer: "Câu trả lời 2", value: 2 },
-          { answer: "Câu trả lời 3", value: 3 },
-        ],
-      },
-    ],
-  },
-  {
-    className: "absolute bottom-[48%] left-[16%] z-3 w-[40%]",
-    questions: [
-      {
-        question: "Câu hỏi 1",
-        answers: [
-          { answer: "Câu trả lời 1", value: 1 },
-          { answer: "Câu trả lời 2", value: 2 },
-          { answer: "Câu trả lời 3", value: 3 },
-        ],
-      },
-      {
-        question: "Câu hỏi 2",
-        answers: [
-          { answer: "Câu trả lời 1", value: 1 },
-          { answer: "Câu trả lời 2", value: 2 },
-          { answer: "Câu trả lời 3", value: 3 },
-        ],
-      },
-    ],
+    className: "bottom-0 right-[7%] w-[35%]",
   },
 ];
 
 function QuizSection({ ...props }) {
   const { height } = useWindowSize();
 
-  const { activeStage, setActiveStage, setIsPopupQuizOpen } = useStorage();
+  const { activeStage, setIsPopupQuizOpen, setIsPopupQuizCompleteOpen } = useStorage();
+  const stageItemsRef = useRef<HTMLDivElement[]>([]);
+
+  useEffect(() => {
+    if (!stageItemsRef.current.length) return;
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline();
+
+      tl.fromTo(
+        stageItemsRef.current,
+        {
+          y: 40,
+          opacity: 0,
+          scale: 0.9,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.6,
+          ease: "power3.out",
+          stagger: 0.15,
+        },
+      ).fromTo(
+        "#quizEnd",
+        {
+          opacity: 0,
+          y: 30,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: "power3.out",
+        },
+        0.5,
+      );
+    });
+
+    return () => {
+      ctx.revert();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (activeStage >= listStages.length) {
+      setTimeout(() => {
+        setIsPopupQuizCompleteOpen(true);
+      }, 1000);
+    }
+  }, [activeStage]);
 
   return (
     <>
-      <div
+      <motion.div
+        initial={{ scale: 1, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0, opacity: 0 }}
         id="QuizSection"
         className={cn("relative flex flex-1 flex-col", height > 620 ? "h-dvh overflow-hidden" : "")}
       >
@@ -160,10 +153,20 @@ function QuizSection({ ...props }) {
             <div
               id={`quizStage${index}`}
               key={index}
+              ref={(el) => {
+                if (el) {
+                  stageItemsRef.current[index] = el;
+                }
+              }}
               className={question.className}
               onClick={() => {
-                if (activeStage === index) setIsPopupQuizOpen(true);
-                else message.warning(`Vui lòng hoàn thành chặng ${activeStage + 1} trước!`);
+                if (activeStage < index) {
+                  message.warning(`Vui lòng hoàn thành chặng ${activeStage + 1} trước!`);
+                } else if (activeStage > index) {
+                  message.warning(`Chặng ${index + 1} đã hoàn thành!`);
+                } else {
+                  setIsPopupQuizOpen(true);
+                }
               }}
             >
               {activeStage === index ? (
@@ -212,14 +215,19 @@ function QuizSection({ ...props }) {
           id="quizEnd"
           src="/images/home/quiz-end.png"
           alt="Manulife Quiz"
-          className={`absolute top-[8%] right-[10%] z-3 w-[43%]`}
+          className={`animation-swing absolute top-[8%] right-[10%] z-3 w-[43%]`}
           width={0}
           height={0}
           sizes="100vw"
         />
-      </div>
+
+        <div className="absolute bottom-2 left-0 z-3 w-full">
+          <Rules />
+        </div>
+      </motion.div>
 
       <PopupQuiz />
+      <PopupQuizComplete />
     </>
   );
 }

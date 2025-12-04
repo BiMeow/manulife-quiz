@@ -4,13 +4,20 @@ import { useStorage } from "@/contexts/StorageContext";
 import Image from "next/image";
 import { memo } from "react";
 import { useWindowSize } from "usehooks-ts";
+import { motion } from "framer-motion";
 
 function IntroSection({ ...props }) {
   const { height } = useWindowSize();
   const { setQuizStep } = useStorage();
   return (
     <>
-      <div id="IntroSection" className={`flex flex-1 flex-col ${height > 620 ? "h-dvh overflow-hidden" : ""} `}>
+      <motion.div
+        initial={{ scale: 1, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0, opacity: 0 }}
+        id="IntroSection"
+        className={`flex flex-1 flex-col ${height > 620 ? "h-dvh overflow-hidden" : ""} `}
+      >
         <Image
           id="introBanner"
           src="/images/home/intro-banner.png"
@@ -27,13 +34,13 @@ function IntroSection({ ...props }) {
           <p className="mx-auto w-max border-t border-[#ffffff1a] pt-3 text-center text-[4.8vw] font-semibold">
             Cơ hội trúng Apple Watch cực xịn <br /> từ Manulife!
           </p>
-          <button className="main-btn flex w-full" onClick={() => setQuizStep(2)}>
-            <span>Bắt đầu</span>
+          <button className="main-btn flexCenter w-full gap-3" onClick={() => setQuizStep(2)}>
+            <p>Bắt đầu</p>
             <IconArrow />
           </button>
           <Rules />
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }
