@@ -89,7 +89,7 @@ function QuizSection({ ...props }) {
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0, opacity: 0 }}
         id="QuizSection"
-        className={cn("relative flex flex-1 flex-col", height > 620 ? "h-dvh overflow-hidden" : "")}
+        className={cn("relative flex flex-1 flex-col h-dvh overflow-hidden")}
       >
         <Image
           id="quizBg"
