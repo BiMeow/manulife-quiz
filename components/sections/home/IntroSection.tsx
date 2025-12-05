@@ -38,7 +38,7 @@ function IntroSection({ ...props }) {
             <p>Bắt đầu</p>
             <IconArrow />
           </button>
-          <Rules />
+          {/* <Rules /> */}
         </div>
       </motion.div>
     </>

@@ -43,7 +43,7 @@ function LoginSection({ ...props }) {
           </h2>
           <input
             type="tel"
-            placeholder="Nhập tuổi thật của bạn"
+            placeholder="Nhập năm sinh của bạn"
             className="cusInput"
             onChange={(e) => setYob(e.target.value)}
             maxLength={4}

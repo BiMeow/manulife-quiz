@@ -227,9 +227,9 @@ function QuizSection({ ...props }) {
           sizes="100vw"
         />
 
-        <div className="absolute bottom-2 left-0 z-3 w-full">
+        {/* <div className="absolute bottom-2 left-0 z-3 w-full">
           <Rules />
-        </div>
+        </div> */}
       </motion.div>
 
       <PopupQuiz />
