@@ -9,11 +9,11 @@ import { motion } from "framer-motion";
 
 function LoginSection({ ...props }) {
   const { height } = useWindowSize();
-  const { setQuizStep, yob, setYob } = useStorage();
+  const { quizStep, setQuizStep, yob, setYob } = useStorage();
 
   const handleNext = () => {
     if (yob.length === 4 && Number(yob) > 1900 && Number(yob) < 2025) {
-      setQuizStep(3);
+      setQuizStep(quizStep + 1);
     } else {
       message.warning("Năm sinh phải sau năm 1900 và trước năm 2025!");
     }
@@ -26,7 +26,7 @@ function LoginSection({ ...props }) {
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0, opacity: 0 }}
         id="LoginSection"
-        className={cn("flex flex-1 flex-col", height > 620 ? "h-dvh overflow-hidden" : "")}
+        className={cn("hideScrollbar flex h-dvh max-h-[800px] flex-1 flex-col overflow-auto")}
       >
         <Image
           id="introBanner"
