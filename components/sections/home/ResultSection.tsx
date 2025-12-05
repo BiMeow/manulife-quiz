@@ -71,12 +71,12 @@ function ResultSection() {
               </i>
               <hr className="mx-auto mt-[18px] w-[85%] border-t border-[#ffffff4f]" />
             </div>
-            <button className="main-btn flexCenter w-full gap-3">
+            <a href="https://www.manulife.com.vn/vi/form-onground.html?utm_source=manwah_quiz&utm_campaign=csr2025_register&zarsrc=31&utm_medium=zalo" className="main-btn flexCenter w-full gap-3">
               <p>
                 Hoàn thiện <br /> thông tin nhận thưởng
               </p>
               <IconArrow />
-            </button>
+            </a>
           </div>
 
           <Image
