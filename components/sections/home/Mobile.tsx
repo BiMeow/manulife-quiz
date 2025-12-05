@@ -10,21 +10,21 @@ function Mobile({ ...props }) {
   const { quizStep } = useStorage();
   const content = useMemo(() => {
     switch (quizStep) {
+      // case 1:
+      //   return <IntroSection />;
       case 1:
-        return <IntroSection />;
-      case 2:
         return <LoginSection />;
-      case 3:
+      case 2:
         return <QuizSection />;
-      case 4:
+      case 3:
         return <ResultSection />;
       default:
-        return <IntroSection />;
+        return <LoginSection />;
     }
   }, [quizStep]);
   return (
     <>
-      <div id="Mobile" className={``}>
+      <div id="Mobile" className={`size-full max-h-[800px] max-w-[500px]`}>
         <AnimatePresence>{content}</AnimatePresence>
       </div>
     </>

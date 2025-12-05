@@ -6,7 +6,7 @@ import { memo, useEffect, useState, useRef } from "react";
 import ConfettiParticles from "./ConfettiParticles";
 
 function PopupQuizComplete() {
-  const { isPopupQuizCompleteOpen, setIsPopupQuizCompleteOpen, setQuizStep } = useStorage();
+  const { isPopupQuizCompleteOpen, setIsPopupQuizCompleteOpen, setQuizStep,quizStep } = useStorage();
   const [showConfetti, setShowConfetti] = useState(false);
   const completeSoundRef = useRef<HTMLAudioElement | null>(null);
 
@@ -85,7 +85,7 @@ function PopupQuizComplete() {
             className="secondary-btn flexCenter w-full gap-3"
             onClick={() => {
               setIsPopupQuizCompleteOpen(false);
-              setQuizStep(4);
+              setQuizStep(quizStep + 1);
             }}
           >
             <p>Xem tuổi bao tử của bạn</p>

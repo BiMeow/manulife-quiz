@@ -21,8 +21,8 @@ function PageHome({ ...props }) {
 
   return (
     <>
-      <div id="PageHome" className={`fadeIn`}>
-        {isInit ? isDesktop ? <Desktop /> : <Mobile /> : null}
+      <div id="PageHome" className={`fadeIn flexCenter min-h-dvh`}>
+        <Mobile />
       </div>
     </>
   );

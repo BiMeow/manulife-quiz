@@ -7,7 +7,7 @@ import { cn } from "@/utils/main";
 import { message } from "antd";
 import { gsap } from "gsap";
 import Image from "next/image";
-import { memo, useEffect, useRef } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { useWindowSize } from "usehooks-ts";
 import { motion } from "framer-motion";
 
@@ -31,6 +31,12 @@ function QuizSection({ ...props }) {
 
   const { activeStage, setIsPopupQuizOpen, setIsPopupQuizCompleteOpen } = useStorage();
   const stageItemsRef = useRef<HTMLDivElement[]>([]);
+
+  const [isEnoughHeight, setIsEnoughHeight] = useState(false);
+
+  useEffect(() => {
+    setIsEnoughHeight(height >= 620);
+  }, [height]);
 
   useEffect(() => {
     if (!stageItemsRef.current.length) return;
@@ -89,7 +95,7 @@ function QuizSection({ ...props }) {
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0, opacity: 0 }}
         id="QuizSection"
-        className={cn("relative flex flex-1 flex-col h-dvh overflow-hidden")}
+        className={cn("relative hideScrollbar flex h-dvh max-h-[800px] flex-1 flex-col overflow-auto")}
       >
         <Image
           id="quizBg"
@@ -215,7 +221,7 @@ function QuizSection({ ...props }) {
           id="quizEnd"
           src="/images/home/quiz-end.png"
           alt="Manulife Quiz"
-          className={`animation-swing absolute top-[8%] right-[10%] z-3 w-[43%]`}
+          className={`animation-swing absolute top-[10%] right-[10%] z-3 w-[43%]`}
           width={0}
           height={0}
           sizes="100vw"

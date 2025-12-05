@@ -88,6 +88,16 @@ body {
   scrollbar-color: #ccc #ffffff1a;
 }
 
+html,
+body,
+.hideScrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 .cusContainer {
   @apply mx-auto w-full px-[20px];
 }
